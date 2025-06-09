@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Basic Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .calculator {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      width: 300px;
+    }
+
+    .display {
+      background-color: #e6e6e6;
+      border: none;
+      border-radius: 4px;
+      height: 50px;
+      width: 100%;
+      margin-bottom: 15px;
+      text-align: right;
+      font-size: 1.5em;
+      padding-right: 10px;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .button {
+      background-color: #4CAF50;
+      border: none;
+      border-radius: 4px;
+      color: #fff;
+      font-size: 1.2em;
+      padding: 15px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background-color: #45a049;
+    }
+
+    .button.special {
+      background-color: #f44336;
+    }
+
+    .button.special:hover {
+      background-color: #e03128;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <input type="text" id="display" class="display" disabled>
+    <div class="buttons">
+      <button class="button" onclick="input('7')">7</button>
+      <button class="button" onclick="input('8')">8</button>
+      <button class="button" onclick="input('9')">9</button>
+      <button class="button" onclick="input('/')">/</button>
+
+      <button class="button" onclick="input('4')">4</button>
+      <button class="button" onclick="input('5')">5</button>
+      <button class="button" onclick="input('6')">6</button>
+      <button class="button" onclick="input('*')">*</button>
+
+      <button class="button" onclick="input('1')">1</button>
+      <button class="button" onclick="input('2')">2</button>
+      <button class="button" onclick="input('3')">3</button>
+      <button class="button" onclick="input('-')">-</button>
+
+      <button class="button" onclick="input('.')">.</button>
+      <button class="button" onclick="input('0')">0</button>
+      <button class="button" onclick="calculate()">=</button>
+      <button class="button" onclick="input('+')">+</button>
+
+      <button class="button special" onclick="clearDisplay()">C</button>
+    </div>
+  </div>
+  <script>
+    let currentInput = '';
+
+    function input(value) {
+      currentInput += value;
+      updateDisplay();
+    }
+
+    function updateDisplay() {
+      const displayElement = document.getElementById('display');
+      displayElement.value = currentInput;
+    }
+
+    function calculate() {
+      try {
+        const result = eval(currentInput);
+        if (result === Infinity || isNaN(result)) {
+          currentInput = 'Error: Invalid Input';
+        } else {
+          currentInput = parseFloat(result.toFixed(2)); // Precision rounding
+        }
+        updateDisplay();
+      } catch {
+        currentInput = 'Error';
+        updateDisplay();
+      }
+    }
+
+    function clearDisplay() {
+      currentInput = '';
+      updateDisplay();
+    }
+  </script>
+</body>
+</html>
